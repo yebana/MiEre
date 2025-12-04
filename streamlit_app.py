@@ -380,56 +380,49 @@ def main():
         
        # st.divider()
         
-        # Fecha de nacimiento (por defecto: 28/06/1970)
+        # Fecha de nacimiento (por defecto: 25/03/1970)
         birth_date = st.date_input(
             "Fecha de Nacimiento",
-            value=st.session_state.get('birth_date', date(1970, 6, 28)),
+            value=st.session_state.get('birth_date', date(1970, 3, 25)),
             min_value=date(1900, 1, 1),
             max_value=date.today(),
             key='birth_date'
         )
         
-        # Fecha de incorporación a la empresa (por defecto: 08/10/2012)
+        # Fecha de incorporación a la empresa (por defecto: 01/06/2989)
         employment_start_date = st.date_input(
             "Fecha de Incorporación a la Empresa",
-            value=st.session_state.get('employment_start_date', date(2012, 10, 8)),
+            value=st.session_state.get('employment_start_date', date(1989, 6, 1)),
             min_value=date(1900, 1, 1),
             max_value=date.today(),
             key='employment_start_date'
         )
         
-        # Fecha de salida (por defecto: 10/10/2027)
+        # Fecha de salida (por defecto: 01/03/2026)
         exit_date = st.date_input(
             "Fecha de Salida",
-            value=st.session_state.get('exit_date', date(2027, 10, 10)),
+            value=st.session_state.get('exit_date', date(2026, 3, 1)),
             min_value=date(2000, 1, 1),
             max_value=date(2050, 12, 31),
             key='exit_date'
         )
         
-        # Salario anual bruto (por defecto: 88.311€)
+        # Salario anual bruto (por defecto: 65.919,12€)
         annual_salary = st.number_input(
             "Salario Anual Bruto (€)",
             min_value=0.0,
-            value=st.session_state.get('annual_salary', 88311.0),
+            value=st.session_state.get('annual_salary', 65919.12),
             step=1000.0,
             key='annual_salary'
         )
+
         
-        # Exención fiscal (por defecto: 119.851€)
-        # fiscal_exemption = st.number_input(
-        #    "Exención Fiscal (€)",
-        #    min_value=0.0,
-        #    value=119851.0,
-        #    step=1000.0
-        #)
-        
-        # IRPF TESA (por defecto: 18,28%)
+        # IRPF TESA (por defecto: 13,75%)
         irpf_tasa = st.number_input(
             "IRPF TESA (%)",
             min_value=0.0,
             max_value=100.0,
-            value=st.session_state.get('irpf_tasa', 18.28),
+            value=st.session_state.get('irpf_tasa', 13.75),
             step=0.01,
             key='irpf_tasa'
         )

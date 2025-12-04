@@ -67,18 +67,9 @@ def generate_excel_data(df_numeric, birth_date):
     return output.getvalue()
 
 def calculate_mixed_compensation(employment_start_date, exit_date, annual_salary):
-    """
-    Calcula la indemnización mixta para contratos firmados antes del 12 de febrero de 2012.
-    Aplica 45 días por año trabajado para periodo anterior a esa fecha y 33 días para periodo posterior.
-    """
-    # Fecha clave: 11 de febrero de 2012
+    
     key_date = date(2012, 2, 11)
     
-    # Verificar si el contrato es anterior a la fecha clave
-    #if employment_start_date >= key_date:
-    #    return 0, 0, 0, "No aplica indemnización mixta (contrato posterior al 12/02/2012)"
-    
-    # Calcular salario diario
     daily_salary = annual_salary / 365
     
     # Periodo 1: Desde incorporación hasta 12/02/2012 (45 días/año)
@@ -103,36 +94,29 @@ def calculate_mixed_compensation(employment_start_date, exit_date, annual_salary
         period2_days = (period2_end - period2_start).days
         period2_years = period2_days / 365
     
+    period1_compensation_days = period1_years * 45
+    period2_compensation_days = period2_years * 33
+
+
     # Calcular indemnización para cada periodo
-    period1_compensation = period1_years * 45 * daily_salary
-    period2_compensation = period2_years * 33 * daily_salary
+    period1_compensation = period1_compensation_days * daily_salary
+    period2_compensation = period2_compensation_days * daily_salary
 
     total_compensation = period1_compensation + period2_compensation
 
-    
-    # Calcular total de días trabajados
-    total_days_worked = (exit_date - employment_start_date).days if exit_date > employment_start_date else 0
-    
-    # Aplicar límite: nunca mayor que el cálculo anterior para los primeros 360 días del periodo total
-    total_years = total_days_worked / 365
-    
-    # period1_compensation + period2_compensation_limitada
-    # donde period2_compensation_limitada no sea mayor que la correspondiente a (2 años menos period1_years) a 33 días/año
-    max_period2_years = max(0, 2 - period1_years * 45 / 365)  # No puede ser negativo
-    max_period2_compensation = max_period2_years * 33 * daily_salary
-    period2_compensation_limited = min(period2_compensation, max_period2_compensation)
+    # Aplicar límites
 
-    # max_compensation_730 = period1_compensation + period2_compensation_limited
-    
-    # Aplicar límite
-    if (period1_years * 45 + period2_years * 33) > 730:
-        # total_compensation = period1_compensation + (730 - period1_years * 45) * daily_salary
-        total_compensation = period1_compensation + period2_compensation_limited
+    if period1_compensation_days >=  730:
+        total_compensation = 730 * daily_salary
         limitation_applied = True
     else:
-        total_compensation = period1_compensation + period2_compensation
-        limitation_applied = False
-    
+        if (period1_compensation_days + period2_compensation_days) >= 730:
+            total_compensation = period1_compensation + (730 - period1_compensation_days) * daily_salary
+            limitation_applied = True
+        else:
+            #total_compensation = period1_compensation + period2_compensation
+            limitation_applied = False
+
     return round(total_compensation, 2), round(period1_compensation, 2), round(period2_compensation, 2), limitation_applied
 
 def calculate_salary_evolution(birth_date, exit_date, annual_salary, fiscal_exemption, irpf_tasa, sepe_salary, irpf_sepe, retirement_salary_63, retirement_salary_65, irpf_jubilacion):

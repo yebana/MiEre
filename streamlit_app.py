@@ -127,7 +127,7 @@ def calculate_mixed_compensation(employment_start_date, exit_date, annual_salary
     # Aplicar límite
     if (period1_years * 45 + period2_years * 33) > 730:
         # total_compensation = period1_compensation + (730 - period1_years * 45) * daily_salary
-        total_compensation = period1_compensation + max_period2_years * 33 * daily_salary
+        total_compensation = period1_compensation + period2_compensation_limited
         limitation_applied = True
     else:
         total_compensation = period1_compensation + period2_compensation

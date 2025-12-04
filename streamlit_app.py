@@ -365,16 +365,16 @@ def main():
         # Botón de recarga en la parte superior
         if st.button("🔄 Recargar Valores por Defecto", use_container_width=True, help="Recarga la página con todos los valores por defecto"):
             # Establecer valores por defecto en session_state
-            st.session_state.birth_date = date(1970, 6, 28)
-            st.session_state.employment_start_date = date(2012, 10, 8)
-            st.session_state.exit_date = date(2027, 10, 10)
-            st.session_state.annual_salary = 88311.0
-            st.session_state.irpf_tasa = 18.28
+            st.session_state.birth_date = date(1970, 3, 25)
+            st.session_state.employment_start_date = date(1989, 6, 1)
+            st.session_state.exit_date = date(2026, 3, 1)
+            st.session_state.annual_salary = 65919.12
+            st.session_state.irpf_tasa = 13.75
             st.session_state.sepe_salary = 1181.0
             st.session_state.irpf_sepe = 5.0
             st.session_state.retirement_age = "Jubilación a los 63 años"
-            st.session_state.retirement_salary_63 = 3771.25
-            st.session_state.retirement_salary_65 = 4328.67
+            st.session_state.retirement_salary_63 = 3033.24
+            st.session_state.retirement_salary_65 = 3100.00
             st.session_state.irpf_jubilacion = 23.0
             st.rerun()
         
